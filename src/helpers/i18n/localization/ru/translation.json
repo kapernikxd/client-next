@@ -1,0 +1,136 @@
+{
+  "language": "Русский",
+  "settings": "Настройки",
+  "profile": "Профиль",
+  "returnHome": "Вернуться на главную",
+  "participants": "Участников",
+  "organizer": "Организатор",
+  "changeCover": "Изменить обложку",
+
+  "eventsTitle": "События",
+  "activityTitle": "Новости",
+  "followersTitle": "Подписчики",
+  "followingTitle": "Подписки",
+  "userBioTitle": "Информация о пользователе",
+  "userContactInfoTitle": "Контактная информация",
+  "userSocialProfiles": "Соц. Сети",
+  "messagesTitle": "Сообщения",
+  "groupChatTitle": "Группы",
+
+  "header": {
+    "newMessages": "Новые Сообщения",
+    "allMessages": "Все сообщения",
+    "notifications": "Уведомления",
+    "allNotifications": "Все уведомления"
+  },
+
+  "activity": {
+    "newParticipate": {
+      "title": "участвует в вашем",
+      "action": "событии"
+    },
+    "newPostLike": {
+      "title": "понравилось ваше",
+      "action": "событие"
+    },
+    "newPost": {
+      "title": "создал(а) новое",
+      "action": "событие"
+    },
+    "newFollow": "подписался(ась) на вас",
+    "newMessage": "отправил(а) вам сообщение"
+  },
+
+  "404": {
+    "text": "Извините! Страницу, которую вы ищете, не существует."
+  },
+
+  "500": {
+    "head": "В настоящее время мы проводим техническое обслуживание",
+    "textl1": "Мы делаем систему более крутой.",
+    "textl2": "Мы скоро вернемся."
+  },
+
+  "editProfile": {
+    "title": "Ред. Профиль",
+    "description": "Заполните Вашу Информацию",
+    "professionLabel": "Профессия",
+    "nameLabel": "Имя",
+    "phoneLabel": "Телефон",
+    "userBioLabel": "Информация о вас"
+  },
+
+  "accountSettings": {
+    "title": "Настройки аккаунта",
+    "description": "Обновите свое имя пользователя и управляйте своей учетной записью",
+    "userLink": "Копировать ссылку",
+    "closeAccount": "Закрыть Аккаунт",
+    "closeAccountDescription": "Удалить ваш Аккаунт и все данные",
+    "usernameLabel": "Имя пользователя",
+    "emailLabel": "Email"
+  },
+
+  "passwordSettings": {
+    "main": "Изменить Пароль",
+    "title": "Настройки Пароля",
+    "description": "Изменить или сбросить пароль учетной записи",
+    "oldPasswordLabel": "Старый Пароль",
+    "newPasswordLabel": "Новый пароль",
+    "validationText": "Минимум 6 символов"
+  },
+
+  "socialProfiles":{
+    "title": "Социальные сети",
+    "description": "Добавьте соц. ссылки в свой профиль",
+    "actionBtn": "Обновить"
+  },
+
+  "rightAside": {
+    "all": "Все",
+    "active": "Активные",
+    "completed": "Завершенные",
+    "eventsTimeLine": "ХРОНОЛОГИЯ СОБЫТИЙ"
+  },
+
+  "editBtn": "Редактировать",
+  "viewBtn": "Просмотр",
+  "updateBtn": "Обновить",
+  "uploadBtn": "Загрузить",
+  "saveBtn": "Применить",
+  "deleteBtn": "Удалить",
+  "closeAccountBtn": "Закрыть Аккаунт",
+  "changePasswordBtn": "Изменить Пароль",
+  "cancelBtn": "Отменить",
+  "addNewEvent": "Создать событие",
+  "participateBtn": "Участвовать",
+  "notParticipateBtn": "Не участвовать",
+  "followBtn": "Подписаться",
+  "unFollowBtn": "Отписаться",
+  "messageBtn": "Написать",
+
+
+  "notification": {
+    "eventCreated": "Событие создано!",
+    "deleted": "Удалено!",
+    "applied": "Изменения применены!",
+    "participantsChat": "Вам доступен общий чат, если вы участвуете в этом событии."
+  },
+  
+  "forms": {
+    "createEvent": "Создать событие",
+    "eventDescription": "Описание события",
+    "title": "Заголовок",
+    "description":"Описание",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "adress": "Адрес",
+    "images": "Фото"
+  },
+
+  "validation": {
+    "required": "Это поле обязательно для заполнения!",
+    "map": "Выбирите позицию на карте!",
+    "uploadPhoto": "Загрузите фото!"
+  }
+
+}
