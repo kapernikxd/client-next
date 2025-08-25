@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { events, findById } from "../../data";
 
 interface PageProps {
@@ -14,7 +15,14 @@ export default function EventPage({ params }: PageProps) {
   return (
     <div>
       <h1>{event.title}</h1>
-      <p>{event.date}</p>
+      <p>{new Date(event.startDate).toLocaleString()}</p>
+      <p>{event.description}</p>
+      <p>{event.address}</p>
+      <div>
+        {event.images.map((src) => (
+          <Image key={src} src={src} alt={event.title} width={200} height={200} />
+        ))}
+      </div>
     </div>
   );
 }
