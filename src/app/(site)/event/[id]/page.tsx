@@ -1,16 +1,15 @@
 import Image from "next/image";
 import { events, findById } from "../../data";
 
-interface PageProps {
-  params: { id: string };
-}
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
 
-export default function EventPage({ params }: PageProps) {
-  const event = findById(events, params.id);
+export default async function EventPage({ params }: PageProps) {
+  const { id } = await params; // 👈 important
+  const event = findById(events, id);
 
-  if (!event) {
-    return <div>Event not found</div>;
-  }
+  if (!event) return <div>Event not found</div>;
 
   return (
     <div>

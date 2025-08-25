@@ -1,15 +1,16 @@
 import { users, findById } from "../../data";
 
-interface PageProps {
-  params: { id: string };
-}
+type PageProps = {
+  params: Promise<{ id: string }>;
+  // при желании:
+  // searchParams?: Promise<Record<string, string | string[]>>;
+};
 
-export default function UserPage({ params }: PageProps) {
-  const user = findById(users, params.id);
+export default async function UserPage({ params }: PageProps) {
+  const { id } = await params;            // 👈 важно
+  const user = findById(users, id);
 
-  if (!user) {
-    return <div>User not found</div>;
-  }
+  if (!user) return <div>User not found</div>;
 
   return (
     <div>

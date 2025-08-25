@@ -1,15 +1,15 @@
 import { places, findById } from "../../data";
 
-interface PageProps {
-  params: { id: string };
-}
+type PageProps = {
+  params: Promise<{ id: string }>;
+  // (опционально) searchParams?: Promise<Record<string, string | string[]>>;
+};
 
-export default function PlacePage({ params }: PageProps) {
-  const place = findById(places, params.id);
+export default async function PlacePage({ params }: PageProps) {
+  const { id } = await params; // ← теперь ок
+  const place = findById(places, id);
 
-  if (!place) {
-    return <div>Place not found</div>;
-  }
+  if (!place) return <div>Place not found</div>;
 
   return (
     <div>
