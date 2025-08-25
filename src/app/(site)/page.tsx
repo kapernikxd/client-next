@@ -8,7 +8,9 @@ export default function HomePage() {
       <ul>
         {events.map((event) => (
           <li key={event.id}>
-            <Link href={`/event/${event.id}`}>{event.title}</Link>
+            <Link href={`/event/${event.id}`}>
+              {event.title} — {new Date(event.startDate).toLocaleDateString()}
+            </Link>
           </li>
         ))}
       </ul>
