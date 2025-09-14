@@ -1,23 +1,23 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import "./layout.css";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/places">Places</Link>
-          </li>
-          <li>
-            <Link href="/users">Users</Link>
-          </li>
-        </ul>
-      </nav>
-      <main>{children}</main>
+    <div className="app-layout">
+      <header className="site-header">
+        <div className="left">
+          <Link href="/">Home</Link>
+        </div>
+        <div className="center">
+          <input type="text" placeholder="Filter" />
+        </div>
+        <div className="right">
+          <Link href="/login">Login</Link>
+        </div>
+      </header>
+      <main className="site-main">{children}</main>
+      <footer className="site-footer">Footer area</footer>
     </div>
   );
 }
