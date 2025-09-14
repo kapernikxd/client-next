@@ -1,0 +1,169 @@
+{
+  "language": "English",
+  "settings": "Settings",
+  "profile": "Profile",
+  "returnHome": "Return Home",
+  "participants": "Participants",
+  "organizer": "Organizer",
+  "changeCover": "Change Cover",
+
+  "eventsTitle": "Events",
+  "activityTitle": "Activity",
+  "followersTitle": "Followers",
+  "followingTitle": "Following",
+  "userBioTitle": "User Bio",
+  "userContactInfoTitle": "Contact Info",
+  "userSocialProfiles": "Social Profiles",
+  "messagesTitle": "Messages",
+  "groupChatTitle": "Group Chat",
+
+  "header": {
+    "newMessages": "New Messages",
+    "allMessages": "See all messages",
+    "notifications": "Notifications",
+    "allNotifications": "See all incoming activity"
+  },
+
+  "activity": {
+    "newParticipate": {
+      "title": "participates in the",
+      "action": "event"
+    },
+    "newPostLike": {
+      "title": "liked the",
+      "action": "post"
+    },
+    "newPost": {
+      "title": "created new",
+      "action": "post"
+    },
+    "updatePost": "updated the",
+    "newFollow": "follows you",
+    "newMessage": "sent you a message"
+  },
+
+  "404": {
+    "text": "Sorry! the page you are looking for does not exist."
+  },
+
+  "500": {
+    "head": "We are currently performing maintenance",
+    "textl1": "We’re making the system more awesome.",
+    "textl2": "We’ll be back shortly."
+  },
+
+  "editProfile": {
+    "title": "Edit Profile",
+    "description": "Set Up Your Personal Information",
+    "nameLabel": "Name",
+    "professionLabel": "Profession",
+    "phoneLabel": "Phone Number",
+    "userBioLabel": "User Bio"
+  },
+
+  "accountSettings": {
+    "title": "Account Settings",
+    "description": "Update your username and manage your account",
+    "userLink": "Copy link",
+    "closeAccount": "Close Account",
+    "closeAccountDescription": "Delete Your Account and Account data",
+    "usernameLabel": "Username",
+    "emailLabel": "Email"
+  },
+
+  "passwordSettings": {
+    "main": "Change Password",
+    "title": "Password Settings",
+    "description": "Change or reset your account password",
+    "oldPasswordLabel": "Old Password",
+    "newPasswordLabel": "New Password",
+    "validationText": "Minimum 6 characters"
+  },
+
+  "socialProfiles": {
+    "title": "Social Profiles",
+    "description": "Add elsewhere links to your profile",
+    "actionBtn": "Update Social Profile"
+  },
+
+  "rightAside": {
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed",
+    "eventsTimeLine": "EVENTS TIME LINE"
+  },
+
+  "editBtn": "Edit",
+  "viewBtn": "View",
+  "updateBtn": "Update Profile",
+  "uploadBtn": "Upload",
+  "saveBtn": "Save Changes",
+  "deleteBtn": "Delete",
+  "closeAccountBtn": "Close Account",
+  "changePasswordBtn": "Change Password",
+  "cancelBtn": "Cancel",
+  "addNewEvent": "Add New Event",
+  "addNewPlace": "Add New Place",
+  "addBtn": "Add",
+  "createBtn": "Create",
+  "participateBtn": "Join",
+  "notParticipateBtn": "Leave",
+  "followBtn": "Follow",
+  "unFollowBtn": "Unfollow",
+  "messageBtn": "Message",
+  "support": "Support",
+  "downloadAppStore": "Download Pllace on AppStore",
+  "downloadGooglePlay": "Download Pllace on Google Play",
+  "installOurApp": "Install our app",
+
+  "profileModeration": {
+    "pending": "Your profile is under review.",
+    "rejectedInfo": "Your profile information was rejected as it doesn't comply with our policy. Please edit your profile information.",
+    "rejectedPhoto": "Your profile photo was rejected as it doesn't comply with our policy. Please change the photo."
+  },
+
+  "eventModeration": {
+    "pending": "This post is under review.",
+    "rejected": "Your post was rejected as it doesn't comply with our policy. Please edit the content or images."
+  },
+
+  "notification": {
+    "eventCreated": "Event created!",
+    "placeCreated": "Place was added!",
+    "deleted": "Deleted!",
+    "applied": "Changes applied!",
+    "participantsChat": "Please use the mobile app to access the chat."
+  },
+
+  "forms": {
+    "createEvent": "Create Event",
+    "eventDescription": "Event description",
+    "title": "Title",
+    "description": "Description",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "adress": "Address",
+    "images": "Images",
+    "channelLink": "Contact Link",
+    "eventType": "Event Type",
+    "selectEventType": "Select event type",
+    "eventOption": "Event",
+    "placeOption": "Place",
+    "accessType": "Access Type",
+    "selectAccessType": "Select access type",
+    "accessCommon": "Common",
+    "accessSubscribers": "For subscribers",
+    "accessPrivate": "Private",
+    "alertAccessCommon": "The event is available to all users",
+    "alertAccessSubscribers": "The event is only available to your subscribers",
+    "alertAccessPrivate": "The event will be available by invitation only",
+    "searchAddress": "Search for an address",
+    "cityPlaceholder": "City:"
+  },
+
+  "validation": {
+    "required": "This field is required!",
+    "map": "Choose a position on the map!",
+    "uploadPhoto": "Upload a photo!"
+  }
+}
