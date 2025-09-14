@@ -1,20 +1,12 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from "antd";
 import { AuthFormWrap } from "../style";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "@app/store/redux/store";
-import {
-  resetPasswordAsync,
-  verificateEmailAsync,
-} from "@app/store/redux/authentication";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {
-  addValidationError,
-  clearFormvalidation,
-} from "@app/store/redux/formValidator";
-import * as _ from "lodash";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@/store/StoreProvider";
 
 const InputGroup = Input.Group;
 
@@ -23,69 +15,57 @@ interface Props {
 }
 
 const ConfirmEmail: FC<Props> = () => {
-  const dispatch = useAppDispatch();
+  const { authStore } = useStore();
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const formValidation = useAppSelector((state) => state.formValidation);
-  const isActivated = useAppSelector((state) => state.auth.user.isActivated);
   const email = searchParams.get("email");
   const reset = searchParams.get("reset");
 
   if (!email) {
-    dispatch(
-      addValidationError({
-        message: "Please, enter email one more time!",
-        errors: [{ field: "email" }],
-      })
-    );
     navigate("/auth/forgotPassword");
   }
 
   const handleChange = () => {
-    dispatch(clearFormvalidation());
+    form.setFields([{ name: "code", errors: [] }]);
   };
 
   const handleSubmit = async (values: any) => {
     const { code1, code2, code3 } = values;
     const code = code1 + code2 + code3;
 
-    if (email && reset) {
-      const resetPassword = await dispatch(
-        resetPasswordAsync({
+    try {
+      if (email && reset) {
+        const res = await authStore.resetPassword({
           verificationCode: code,
           email: decodeURIComponent(email),
-        })
-      );
-      if (resetPassword.payload.link) {
-        const { payload } = resetPassword;
-        navigate(`/auth/resetPassword/${payload.link}`);
-      }
-      return;
-    } else {
-      const verificateEmail = await dispatch(
-        verificateEmailAsync({
+        });
+        if (res.link) {
+          navigate(`/auth/resetPassword/${res.link}`);
+        }
+      } else if (email) {
+        const res = await authStore.otp({
           verificationCode: code,
-          email: decodeURIComponent(email as string),
-        })
-      );
-      if (verificateEmail.payload.user) {
-        const { payload } = verificateEmail;
-        payload.user.isActivated
-          ? navigate("/")
-          : navigate("/auth/forgotPassword");
+          email: decodeURIComponent(email),
+        });
+        if (res.user) {
+          res.user.isActivated
+            ? navigate("/")
+            : navigate("/auth/forgotPassword");
+        }
       }
-      return;
+    } catch (e: any) {
+      if (e && typeof e === "object") {
+        const fields = Object.entries(e).map(([name, message]) => ({
+          name,
+          errors: [message as string],
+        }));
+        form.setFields(fields);
+      }
     }
   };
-
-  useEffect(() => {
-    if (formValidation.hasError) {
-      form.validateFields();
-    }
-  }, [formValidation]);
 
   return (
     <Row justify="center">
@@ -109,30 +89,12 @@ const ConfirmEmail: FC<Props> = () => {
                 label={t("auth.codeLabel")}
                 name="code"
                 rules={[
-                  () => ({
-                    validator() {
-                      if (_.find(formValidation.errors, { field: "code" })) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "code",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                   ({ getFieldValue }) => ({
                     validator() {
                       if (
-                        !_.isEmpty(getFieldValue("code1")) &&
-                        !_.isEmpty(getFieldValue("code2")) &&
-                        !_.isEmpty(getFieldValue("code3"))
-                      ) {
-                        return Promise.resolve();
-                      }
-                      if (
                         getFieldValue("code1") &&
-                        !_.isEmpty(getFieldValue("code2")) &&
-                        !_.isEmpty(getFieldValue("code3"))
+                        getFieldValue("code2") &&
+                        getFieldValue("code3")
                       ) {
                         return Promise.resolve();
                       }
@@ -226,4 +188,4 @@ const ConfirmEmail: FC<Props> = () => {
   );
 };
 
-export default ConfirmEmail;
+export default observer(ConfirmEmail);
