@@ -2,33 +2,18 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button, Drawer } from 'antd';
+import { Button } from 'antd';
+import Sidebar from './Sidebar';
 import styles from './header.module.css';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const toggleSidebar = () => setOpen(!open);
+  const closeSidebar = () => setOpen(false);
 
   return (
     <>
-      <Drawer
-        placement="left"
-        width={280}
-        open={open}
-        onClose={toggleSidebar}
-        className={styles.sidebarDrawer}
-      >
-        <nav className={styles.sidebar}>
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/places">Places</Link>
-            </li>
-          </ul>
-        </nav>
-      </Drawer>
+      <Sidebar open={open} onClose={closeSidebar} />
       <header className={styles.siteHeader}>
         <div className={styles.left}>
           <Button type="link" onClick={toggleSidebar} className={styles.sidebarToggle}>

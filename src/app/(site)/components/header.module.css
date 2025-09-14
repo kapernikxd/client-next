@@ -33,21 +33,3 @@
   font-size: 1.25rem;
 }
 
-.sidebarDrawer :global(.ant-drawer-body) {
-  padding: 0;
-}
-
-.sidebar {
-  padding-top: 70px;
-}
-
-.sidebar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 1rem;
-}
-
