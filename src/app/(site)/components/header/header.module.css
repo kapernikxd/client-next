@@ -35,3 +35,10 @@
   font-size: 1.25rem;
 }
 
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
