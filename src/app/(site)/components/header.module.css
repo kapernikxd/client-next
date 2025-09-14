@@ -4,7 +4,8 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: var(--header-bg, #fff);
+  background: var(--color-background);
+  color: var(--color-text);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
