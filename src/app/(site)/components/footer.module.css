@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
+  font-size: var(--font-size-base);
   font-weight: 500;
   padding: 12px 30px;
-  background: var(--color-white, #fff);
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .footerLeft {
@@ -30,7 +31,7 @@
 
 .footerCopyrightLink {
   margin-left: 4px;
-  color: var(--color-primary, #1677ff);
+  color: var(--color-primary);
 }
 
 .footerCopyright {}
@@ -47,7 +48,7 @@
   .footer {
     flex-direction: column;
     gap: 2px;
-    font-size: 12px;
+    font-size: calc(var(--font-size-base) - 2px);
   }
 }
 
