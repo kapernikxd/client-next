@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'antd';
-import Sidebar from './Sidebar';
+import Sidebar from '../sidebar/Sidebar';
 import styles from './header.module.css';
 
 export default function Header() {
