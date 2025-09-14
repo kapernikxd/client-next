@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Header, Footer } from "./components";
 import ThemeProvider from "@/ThemeProvider";
-import "./layout.css";
+import "./layout.scss";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
