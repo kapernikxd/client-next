@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'antd';
 import Sidebar from '../sidebar/Sidebar';
-import styles from './header.module.css';
+import styles from './header.module.scss';
 import { NoAuthUser } from '../UI';
 
 export default function Header() {

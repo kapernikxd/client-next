@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import styles from './sidebar.module.css';
+import styles from './sidebar.module.scss';
 
 interface SidebarProps {
   open: boolean;

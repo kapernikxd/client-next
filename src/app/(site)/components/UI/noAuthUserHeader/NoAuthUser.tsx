@@ -4,7 +4,7 @@ import { Avatar, Popover, Space } from 'antd';
 import { UserOutlined, DownOutlined, LoginOutlined, UserAddOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import React from 'react';
-import styles from './NoAuthUser.module.css';
+import styles from './NoAuthUser.module.scss';
 
 const NoAuthUser: React.FC = () => {
   const t = (k: string) => ({ 'auth.signUp': 'Sign Up', 'auth.signIn': 'Sign In' }[k] || k);
