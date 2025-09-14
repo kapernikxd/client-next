@@ -4,48 +4,8 @@
   min-height: 100vh;
 }
 
-.site-header,
-.site-footer {
-  flex-shrink: 0;
-  padding: 1rem;
-}
-
-.site-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.site-header > .left,
-.site-header > .center,
-.site-header > .right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .site-main {
   flex: 1 0 auto;
   padding: 1rem;
-}
-
-.site-footer {
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .site-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .site-header > .center {
-    flex: 1;
-  }
-
-  .site-header > .left,
-  .site-header > .right {
-    width: 25%;
-  }
+  padding-top: 70px;
 }

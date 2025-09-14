@@ -1,0 +1,53 @@
+.siteHeader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--header-bg, #fff);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 70px;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  gap: 1rem;
+}
+
+.center {
+  flex: 1;
+  justify-content: center;
+}
+
+.sidebarToggle {
+  font-size: 1.25rem;
+}
+
+.sidebarDrawer :global(.ant-drawer-body) {
+  padding: 0;
+}
+
+.sidebar {
+  padding-top: 70px;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 1rem;
+}
+
