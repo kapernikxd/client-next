@@ -1,50 +1,50 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { Row, Col, Form, Input, Button } from "antd";
 
 import { AuthFormWrap } from "../style";
 import { Checkbox } from "@app/components/UIElements/checkbox/checkbox";
-import { useAppDispatch, useAppSelector } from "@app/store/redux/store";
 import { useTranslation } from "react-i18next";
-import {
-  RegistrationParams,
-  registrationAsync,
-} from "@app/store/redux/authentication";
-import { clearFormvalidation } from "@app/store/redux/formValidator";
-import * as _ from "lodash";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@/store/StoreProvider";
+import { RegistrationParams } from "@/store/mobx/auth";
 
 interface Props {
   path: string;
 }
 
 const SignUp: FC<Props> = () => {
-  const dispatch = useAppDispatch();
+  const { authStore } = useStore();
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const formValidation = useAppSelector((state) => state.formValidation);
 
   const handleSubmit = async (values: RegistrationParams) => {
-    const registration = await dispatch(registrationAsync(values));
-    if (!registration.type.includes("rejected")) {
+    try {
+      await authStore.registration(values);
       navigate({
         pathname: "/auth/confirmEmail",
-        search: createSearchParams({
-          email: values.email,
-        }).toString(),
+        search: createSearchParams({ email: values.email }).toString(),
       });
+    } catch (e: any) {
+      if (e && typeof e === "object") {
+        const fields = Object.entries(e).map(([name, message]) => ({
+          name,
+          errors: [message as string],
+        }));
+        form.setFields(fields);
+      }
     }
   };
 
   const handleForm = () => {
-    dispatch(clearFormvalidation());
+    form.setFields([
+      { name: "name", errors: [] },
+      { name: "lastname", errors: [] },
+      { name: "email", errors: [] },
+      { name: "password", errors: [] },
+    ]);
   };
-
-  useEffect(() => {
-    if (formValidation.hasError) {
-      form.validateFields();
-    }
-  }, [formValidation]);
 
   return (
     <Row justify="center">
@@ -71,17 +71,6 @@ const SignUp: FC<Props> = () => {
                     required: true,
                     message: t("auth.validation.name") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (_.find(formValidation.errors, { field: "name" })) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "name",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input placeholder={t("auth.placeholderName") as string} />
@@ -94,19 +83,6 @@ const SignUp: FC<Props> = () => {
                     required: true,
                     message: t("auth.validation.lastname") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (
-                        _.find(formValidation.errors, { field: "lastname" })
-                      ) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "lastname",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input placeholder={t("auth.placeholderName") as string} />
@@ -120,17 +96,6 @@ const SignUp: FC<Props> = () => {
                     required: true,
                     message: t("auth.validation.email") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (_.find(formValidation.errors, { field: "email" })) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "email",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input placeholder={t("auth.placeholderEmail") as string} />
@@ -147,19 +112,6 @@ const SignUp: FC<Props> = () => {
                     min: 6,
                     message: t("auth.validation.minPassword6") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (
-                        _.find(formValidation.errors, { field: "password" })
-                      ) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "password",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input.Password placeholder={t("auth.password") as string} />
@@ -232,4 +184,4 @@ const SignUp: FC<Props> = () => {
   );
 };
 
-export default SignUp;
+export default observer(SignUp);

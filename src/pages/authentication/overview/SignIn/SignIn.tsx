@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 import {
@@ -10,15 +10,10 @@ import {
 } from "react-router-dom";
 import { AuthFormWrap } from "../style";
 import { Checkbox } from "@app/components/UIElements/checkbox/checkbox";
-import { useAppDispatch, useAppSelector } from "@app/store/redux/store";
 import { useTranslation } from "react-i18next";
-import {
-  LoginParams,
-  loginAsync,
-  loginGoogleAsync,
-} from "@app/store/redux/authentication";
-import * as _ from "lodash";
-import { clearFormvalidation } from "@app/store/redux/formValidator";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@/store/StoreProvider";
+import { LoginParams } from "@/store/mobx/auth";
 
 interface Props {
   path: string;
@@ -26,12 +21,9 @@ interface Props {
 
 const SignIn: FC<Props> = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { authStore } = useStore();
   const [form] = Form.useForm();
   const { t } = useTranslation();
-
-  const isLoading = useAppSelector((state) => state.auth.loading);
-  const formValidation = useAppSelector((state) => state.formValidation);
 
   const [state, setState] = useState({
     checked: null,
@@ -39,29 +31,32 @@ const SignIn: FC<Props> = () => {
 
   const handleGoogleSuccess = async (response: any) => {
     const credential = response?.credential;
-
-    const login = await dispatch(loginGoogleAsync(credential));
-    if (!login.type.includes("rejected")) {
+    try {
+      await authStore.loginByGoogle(credential);
       navigate("/");
+    } catch (e) {
+      console.log(e);
     }
-    // Отправьте токен на ваш сервер для дополнительной проверки и аутентификации пользователя
-    // например, с помощью fetch или axios
   };
 
   const handleSubmit = async ({ email, password }: LoginParams) => {
-    const login = await dispatch(loginAsync({ email, password }));
-
-    if (!login.type.includes("rejected")) {
-      const { payload }: any = login;
-      if (!payload.user.isActivated) {
+    try {
+      const data = await authStore.login({ email, password });
+      if (!data.user.isActivated) {
         navigate({
           pathname: "/auth/confirmEmail",
-          search: createSearchParams({
-            email,
-          }).toString(),
+          search: createSearchParams({ email }).toString(),
         });
       } else {
         navigate("/");
+      }
+    } catch (e: any) {
+      if (e && typeof e === "object") {
+        const fields = Object.entries(e).map(([name, message]) => ({
+          name,
+          errors: [message as string],
+        }));
+        form.setFields(fields);
       }
     }
   };
@@ -71,16 +66,11 @@ const SignIn: FC<Props> = () => {
   };
 
   const handleForm = () => {
-    if (formValidation.message) {
-      dispatch(clearFormvalidation());
-    }
+    form.setFields([
+      { name: "email", errors: [] },
+      { name: "password", errors: [] },
+    ]);
   };
-
-  useEffect(() => {
-    if (formValidation.hasError) {
-      form.validateFields();
-    }
-  }, [formValidation]);
 
   return (
     <Row justify="center">
@@ -106,17 +96,6 @@ const SignIn: FC<Props> = () => {
                     message: t("auth.validation.emailOrUsername") as string,
                     required: true,
                   },
-                  () => ({
-                    validator() {
-                      if (_.find(formValidation.errors, { field: "email" })) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "email",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
                 initialValue="testuser1@gmail.com"
                 label={t("auth.usernameOrEmail")}
@@ -136,19 +115,6 @@ const SignIn: FC<Props> = () => {
                     min: 6,
                     message: t("auth.validation.minPassword6") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (
-                        _.find(formValidation.errors, { field: "password" })
-                      ) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "password",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input.Password placeholder={t("auth.password") as string} />
@@ -168,7 +134,7 @@ const SignIn: FC<Props> = () => {
                   type="primary"
                   size="large"
                 >
-                  {isLoading ? t("auth.loading") : t("auth.signIn")}
+                  {authStore.loading ? t("auth.loading") : t("auth.signIn")}
                 </Button>
               </Form.Item>
               <p className="pllace-form-divider">
@@ -202,4 +168,4 @@ const SignIn: FC<Props> = () => {
   );
 };
 
-export default SignIn;
+export default observer(SignIn);

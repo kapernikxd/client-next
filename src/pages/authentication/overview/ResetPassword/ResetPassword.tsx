@@ -1,13 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from "antd";
 import { AuthFormWrap } from "../style";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import * as _ from "lodash";
-import { useAppDispatch, useAppSelector } from "@app/store/redux/store";
-import { clearFormvalidation } from "@app/store/redux/formValidator";
-import { newPasswordAsync } from "@app/store/redux/authentication";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@/store/StoreProvider";
 
 interface Props {
   path: string;
@@ -15,10 +13,9 @@ interface Props {
 
 const ResetPassword: FC<Props> = ({ path = "" }) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { authStore } = useStore();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const formValidation = useAppSelector((state) => state.formValidation);
   const { link } = useParams();
 
   if (!link) {
@@ -26,24 +23,28 @@ const ResetPassword: FC<Props> = ({ path = "" }) => {
   }
 
   const handleChange = () => {
-    dispatch(clearFormvalidation());
+    form.setFields([{ name: "password", errors: [] }]);
   };
 
   const handleSubmit = async (values: any) => {
-    const isEmailExist = await dispatch(
-      newPasswordAsync({ password: values.password, activatedLink: link })
-    );
-
-    if (isEmailExist.payload.user) {
-      navigate("/auth");
+    try {
+      const res = await authStore.newPassword({
+        password: values.password,
+        activatedLink: link as string,
+      });
+      if (res.user) {
+        navigate("/auth");
+      }
+    } catch (e: any) {
+      if (e && typeof e === "object") {
+        const fields = Object.entries(e).map(([name, message]) => ({
+          name,
+          errors: [message as string],
+        }));
+        form.setFields(fields);
+      }
     }
   };
-
-  useEffect(() => {
-    if (formValidation.hasError) {
-      form.validateFields();
-    }
-  }, [formValidation]);
 
   return (
     <Row justify="center">
@@ -74,19 +75,6 @@ const ResetPassword: FC<Props> = ({ path = "" }) => {
                     min: 6,
                     message: t("auth.validation.minPassword6") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (
-                        _.find(formValidation.errors, { field: "password" })
-                      ) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "password",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input.Password placeholder={t("auth.password") as string} />
@@ -139,4 +127,4 @@ const ResetPassword: FC<Props> = ({ path = "" }) => {
   );
 };
 
-export default ResetPassword;
+export default observer(ResetPassword);

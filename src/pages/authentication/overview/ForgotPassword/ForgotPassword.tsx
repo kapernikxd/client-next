@@ -1,13 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from "antd";
 import { AuthFormWrap } from "../style";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import * as _ from "lodash";
-import { useAppDispatch, useAppSelector } from "@app/store/redux/store";
-import { clearFormvalidation } from "@app/store/redux/formValidator";
-import { activateEmailAsync } from "@app/store/redux/authentication";
+import { observer } from "mobx-react-lite";
+import { useStore } from "@/store/StoreProvider";
 
 interface Props {
   path: string;
@@ -15,35 +13,34 @@ interface Props {
 
 const ForgotPassword: FC<Props> = ({ path = "" }) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { authStore } = useStore();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const formValidation = useAppSelector((state) => state.formValidation);
 
   const handleChange = () => {
-    dispatch(clearFormvalidation());
+    form.setFields([{ name: "email", errors: [] }]);
   };
 
   const handleSubmit = async (values: any) => {
     const { email } = values;
-    const isEmailExist = await dispatch(activateEmailAsync(email));
-
-    if (isEmailExist.payload.user) {
-      navigate({
-        pathname: "/auth/confirmEmail",
-        search: createSearchParams({
-          email,
-          reset: "true",
-        }).toString(),
-      });
+    try {
+      const res = await authStore.activateEmail(email);
+      if (res.user) {
+        navigate({
+          pathname: "/auth/confirmEmail",
+          search: createSearchParams({ email, reset: "true" }).toString(),
+        });
+      }
+    } catch (e: any) {
+      if (e && typeof e === "object") {
+        const fields = Object.entries(e).map(([name, message]) => ({
+          name,
+          errors: [message as string],
+        }));
+        form.setFields(fields);
+      }
     }
   };
-
-  useEffect(() => {
-    if (formValidation.hasError) {
-      form.validateFields();
-    }
-  }, [formValidation]);
 
   return (
     <Row justify="center">
@@ -72,17 +69,6 @@ const ForgotPassword: FC<Props> = ({ path = "" }) => {
                     required: true,
                     message: t("auth.validation.email") as string,
                   },
-                  () => ({
-                    validator() {
-                      if (_.find(formValidation.errors, { field: "email" })) {
-                        const { message } = _.find(formValidation.errors, {
-                          field: "email",
-                        });
-                        return Promise.reject(message);
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
                 ]}
               >
                 <Input placeholder={t("auth.placeholderEmail") as string} />
@@ -111,4 +97,4 @@ const ForgotPassword: FC<Props> = ({ path = "" }) => {
   );
 };
 
-export default ForgotPassword;
+export default observer(ForgotPassword);
