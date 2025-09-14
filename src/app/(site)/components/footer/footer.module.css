@@ -21,12 +21,17 @@
   gap: 8px;
 }
 
-.footerMiddleApple img {
-  height: 50px;
-}
-
-.footerMiddleGoogle img {
-  height: 38px;
+.footerMiddleApple img, .footerMiddleGoogle img {
+  align-items: center;
+  border: 1px solid;
+  border-color: var(--black);
+  border-radius: 5px;
+  display: flex;
+  /* height: 44px; */
+  justify-content: center;
+  position: relative;
+  width: 152px;
+  padding: 4px 8px;
 }
 
 .footerCopyrightLink {
@@ -51,4 +56,3 @@
     font-size: calc(var(--font-size-base) - 2px);
   }
 }
-
