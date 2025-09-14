@@ -1,0 +1,90 @@
+:root{
+  --um-radius: 12px;
+  --um-gap: 10px;
+  --um-pad-y: 10px;
+  --um-pad-x: 18px;
+  --um-primary: #6f2da8;
+  --um-primary-08: rgba(111,45,168,.08);
+  --um-primary-12: rgba(111,45,168,.12);
+  --um-border: rgba(0,0,0,.06);
+  --um-bg-soft: rgba(0,0,0,.04);
+  --um-shadow: 0 10px 24px rgba(111,45,168,.15);
+  --um-grey-600: #6a6a6a;
+}
+
+/* ===== Block: user-menu ===== */
+.user-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--um-border);
+  border-radius: 9999px;
+  background: var(--um-bg-soft);
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .05s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.user-menu__trigger:hover {
+  background: var(--um-primary-08);
+  border-color: rgba(111,45,168,.28);
+  box-shadow: var(--um-shadow);
+}
+
+.user-menu__trigger:active {
+  transform: translateY(1px);
+}
+
+.user-menu__chevron {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* панель внутри Popover (контент) */
+.user-menu__panel {
+  display: block;
+}
+
+.user-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0 6px;
+}
+
+.user-menu__item {
+  margin: 0;
+  padding: 4px 12px;
+}
+
+/* модификаторы пунктов */
+.user-menu__item:hover {
+  background: var(--um-primary-12);
+}
+
+.user-menu__item:hover .user-menu__text, .user-menu__item:hover .user-menu__icon{
+  color: var(--um-primary);
+}
+
+
+/* ссылки в пунктах */
+.user-menu__link {
+  display: flex;
+  align-items: center;
+  gap: var(--um-gap);
+  padding: var(--um-pad-y) var(--um-pad-x);
+  text-decoration: none;
+  color: inherit;
+  transition: color .2s ease, background .2s ease, padding-left .2s ease;
+}
+
+/* иконки и текст */
+.user-menu__icon {
+  color: currentColor; /* иконка наследует цвет текста */
+  font-size: 16px;
+}
+
+.user-menu__text {
+  line-height: 1.2;
+  font-size: 14px;
+}
